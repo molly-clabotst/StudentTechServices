@@ -258,6 +258,14 @@ public class TrackingLog extends JFrame{
             }
         });
 
+
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                manager.getAllTickets();
+            }
+        });
+
 //TODO: Add delete club member button and ticket from ticket viewer
 
 //        deleteSelectedButton.addActionListener(new ActionListener() {
@@ -281,6 +289,7 @@ public class TrackingLog extends JFrame{
 //                }
 //            }
 //        });
+
         saveAndQuitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

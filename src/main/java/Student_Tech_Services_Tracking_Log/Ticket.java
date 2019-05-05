@@ -36,25 +36,6 @@ public class Ticket {
     private boolean consent;
 
 
-    //STATIC Counter - one variable, shared by all Ticket objects.
-    //If any Ticket object modifies this counter, all Ticket objects will have the modified value
-    //Make it private - only Ticket objects should have access
-//    private static int ticketIdCounter = 1;
-
-    //The ID for each ticket - an instance variable. Each Ticket will have it's own ticketID variable
-//    private int ticketID;
-
-    // You should have already done these tasks in the previous lab
-    // TODO: tickets need to store the resolution date and a string describing the resolution
-    // TODO implement your mechanism to ensure new tickets have a unique ID
-    // TODO add any other methods you wrote in the previous lab and will need here
-
-
-    // TODO use this constructor to create a Ticket from existing Ticket data read from a file
-    // Notice that it does not modify the static ticketIDCounter
-    // Use the setNextID and getNextId method if you need to change the next ticketID that will
-    // be generated, for example, if you are re-starting the program
-
 //    Constructor for new Ticket
     public Ticket(String cName, boolean sign, String prDes, boolean consent) {
         this.clientName = cName;
@@ -81,6 +62,7 @@ public class Ticket {
             this.clientID = "0";
         }
     }
+    //TODO: set up regex for this method
     public void setClientMail(String mail){this.clientMail = mail;}
     public int setClientPhone(String phone){
         int fone = 0;
@@ -109,7 +91,7 @@ public class Ticket {
             this.memID = "0";
         }
     }
-
+    //TODO: set up getting ID from Database
     public void setID(String ID){
         try {
             int id = Integer.parseInt(ID);
@@ -169,8 +151,6 @@ public class Ticket {
         return chainString;
     }
 
-    // TODO Problem 8 you may want to add a method to generate a String representing this Ticket, suitable
-    //  for writing to a file. Whatever you write out, should be able to be read and turned back into a Ticket object.
     // Recommendation: write dates as timestamps, not a String. It will be much simpler to read them back.
 
 //    string for ticket with chain of custody

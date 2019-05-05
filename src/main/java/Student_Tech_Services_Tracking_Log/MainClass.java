@@ -19,14 +19,6 @@ public class MainClass {
 //    TicketGUI ticketGUI;
     ResolvedTicketStore resolvedTicketStore;
 
-//    static String openTicketsFile = "open_tickets.txt";
-    static String resolvedTicketsFilePrefix = "Resolved_Tickets_"; // for making a filename like  "Resolved_Tickets_September_28_2017.txt"
-//    static String ticketCounterFile = "ticket_counter.txt";
-
-
-    // Write and read to files in this directory. The tests will use a different directory, but same filenames.
-//    static String ticketDataDirectory = "TicketData";
-
 
     public static void main(String[] args) {
         MainClass ticketProgram = new MainClass();
@@ -123,7 +115,6 @@ public class MainClass {
 
     }
 
-
     protected LinkedList<Ticket> getAllTickets() {
         LinkedList<Ticket> allTickets = ticketStore.getAllTickets();
         return allTickets;
@@ -132,7 +123,6 @@ public class MainClass {
 
     protected void quitProgram() {
 
-        // TODO task 8
 //        record date last edited
         SimpleDateFormat df = new SimpleDateFormat("MMMM_dd_yyyy");
         String today = df.format(new Date());
@@ -150,7 +140,10 @@ public class MainClass {
         }
 
 //        save resolved tickets
-
+        for (Ticket ticket :
+                resolvedTicketStore.getAllTickets()) {
+            ticketDB.addNewTicket(ticket);
+        }
 
 
     }

@@ -7,12 +7,13 @@ public class ResolvedTicketStore {
     LinkedList<Ticket> resolvedTickets;
 
     ResolvedTicketStore() {
-        resolvedTickets = new LinkedList<Ticket>();
+        resolvedTickets = new LinkedList<>();
     }
 
     public void addTicket(Ticket t) {
         resolvedTickets.add(t);
     }
+
 
     public LinkedList<Ticket> getAllTickets() {
         return resolvedTickets;

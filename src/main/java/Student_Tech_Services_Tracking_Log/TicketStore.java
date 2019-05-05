@@ -53,7 +53,6 @@ public class TicketStore {
      */
     public void add(Ticket newTicket) {
         ticketQueue.add(newTicket);
-//        ticketQueue.sort(ticketComparator);
     }
 
 
