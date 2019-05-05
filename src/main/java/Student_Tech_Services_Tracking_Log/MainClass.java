@@ -110,7 +110,6 @@ public class MainClass {
 
 
     protected void resolveTicket(Ticket ticket) {
-        // TODO 7
         resolvedTicketStore.addTicket(ticket);
         ticketStore.deleteTicketById(ticket.getID());
     }
@@ -153,25 +152,6 @@ public class MainClass {
 //        save resolved tickets
 
 
-        // Use the static String resolvedTicketsFilePrefix = "Resolved_Tickets_";
-        // for making a filename like  "Resolved_Tickets_September_28_2017.txt"
-
 
     }
-
-
-
-
-    // To run the program with test data, call this method with desired test data.
-    // You don't need to modify this method.
-
-//    protected void setup(LinkedList<Ticket> injectedTestData, int nextTicketId) {
-//        createTicketStore();
-//        configureResolvedTickets();
-//        loadTicketsFromTicketStore(injectedTestData);
-//        configureTicketIdGenerator(nextTicketId);
-//    }
-
-
-
 }

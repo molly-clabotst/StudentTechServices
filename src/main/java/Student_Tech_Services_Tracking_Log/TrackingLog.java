@@ -16,24 +16,22 @@ public class TrackingLog extends JFrame{
 //    Pannels and panes
     protected JPanel mainPanel;
     protected JTabbedPane tabbedPane;
-//    List
-    protected JList<LinkedList> chanOfCustody;
-//    Radio Buttons and groups
-//    Backed up?
+    //    List
+    protected JList<String> chanOfCustody;
+    private JList tikDispList;
+    //    Radio Buttons and groups
+    //    Backed up?
     protected JRadioButton noRadioButton;
     protected JRadioButton yesRadioButton;
     protected ButtonGroup yesNoGroup;
-//    How?
+    //    How?
     protected JRadioButton externalHardDriveRadioButton;
     protected JRadioButton cloudBasedStorageRadioButton;
     protected ButtonGroup backUpGroup;
-//    Spinner
-    protected JSpinner dateSpinner;
-//    Checkboxes
-    protected JCheckBox diskCleanUpCheckBox;
+    //    Checkboxes
     protected JCheckBox signedWaiverCheckBox;
     protected JCheckBox consent;
-//    Text Fields
+    //    Text Fields
     protected JTextField textMemStar;
     protected JTextField textStar;
     protected JTextField textCliPhone;
@@ -42,91 +40,63 @@ public class TrackingLog extends JFrame{
     protected JTextField textSrchID;
     protected JTextField textSrchDesc;
     protected JTextField textMemName;
-//    Buttons
+    //    Buttons
     protected JButton submitInformationButton;
     protected JButton searchIDButton;
     protected JButton searchDescButton;
     protected JButton loadButton;
     protected JButton addClubMemberToButton;
-//    Text Area
+    private JButton saveAndQuitButton;
+    //    Text Area
     protected JTextArea taProbDesc;
-    protected JTextArea taTikDisplay;
     protected JTextArea taResolution;
 
-    //    Create the list model and instantiate the main class
-    protected DefaultListModel<LinkedList>listModel;
-    Date date= new Date();
+    //    Create the list model for the chain of custody and the displayed tickets
+    //    instantiate the main class
+    protected DefaultListModel<String>chainListMo;
+    protected DefaultListModel<String>tikListMo;
     MainClass manager;
 
+//    Starting the app
     TrackingLog(MainClass manager) {
-
+//        Instantiate the app
         this.manager = manager;
-
+//        Set up Gui
         setContentPane(mainPanel);
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         rootPane.setDefaultButton(submitInformationButton);
-
-        configDateSpinner();
-        listModel = new DefaultListModel<>();
-        chanOfCustody.setModel(listModel);
+//        Set up list models for JLists
+        chainListMo= new DefaultListModel<>();
+        tikListMo = new DefaultListModel<>();
+        chanOfCustody.setModel(chainListMo);
+        tikDispList.setModel(tikListMo);
         chanOfCustody.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        // displaying the ticket queue at the beginning of the program you jerk
-        displayList(manager.ticketStore.getAllTickets());
-
+        tikDispList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//        Set up listeners for components
         addListeners();
 
     }
-    //TODO: find the garden program and copy the JSpinner
-    private void configDateSpinner() {
-//        priorityComboBox.setModel(new DefaultComboBoxModel(priority));
+
+    private void clearBoxesView(){
+//        Clear Ticket viewer text boxes
+        textSrchDesc.setText("");
+        textSrchID.setText("");
+//        Clear ticket display list
+        tikDispList.clearSelection();
     }
 
-    private void displayList(LinkedList<> list){
-        listModel.removeAllElements();
-        LinkedList<LinkedList<String>> name = new LinkedList<>();
-        for (Object item:
-                list) {
-            listModel.addElement(item);
-        }
-    }
 
-    private void displayElement(Ticket newElement) {
-        listModel.addElement(newElement);
-    }
-
-    /**
-     * @param,
-     * my attempt to avoid concurrent modification exception TY stack overflow
-     */
-//    private void deleteFrmList() {
-//
-//        for (Ticket t :
-//                forDisplayList) {
-//            forDisplayList.remove(t);
-//        }
-//
-////        Iterator<Ticket> iter = forDisplayList.iterator();
-////        while (iter.hasNext()){
-////            Ticket t = iter.next();
-////            iter.remove();
-////    }
-//    }
-    private void clearBoxes(){
+    private void clearBoxesTrak(){
 //        Clear Radios
         yesNoGroup.clearSelection();
         backUpGroup.clearSelection();
-//        Reset Date Spinner
-        dateSpinner.setValue(date);
 //        Uncheck Checkboxes
-        diskCleanUpCheckBox.setSelected(false);
         signedWaiverCheckBox.setSelected(false);
         consent.setSelected(false);
 //        Clear Text Areas
         taProbDesc.setText("");
-        taTikDisplay.setText("");
         taResolution.setText("");
 //        Clear Text Boxes
         textMemStar.setText("");
@@ -135,51 +105,88 @@ public class TrackingLog extends JFrame{
         textClieEmail.setText("");
         textCliName.setText("");
         textMemName.setText("");
-        textSrchDesc.setText("");
-        textSrchID.setText("");
     }
 
     private void addListeners(){
+
+        addClubMemberToButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chainListMo.addElement(textMemName.getText()+"/"+textMemStar.getText());
+            }
+        });
+
         submitInformationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-//                Checking that there is data for; Client student name, email, star Id; Club member name,
-//                star ID; problem description, waiver is signed and consent to services are present
+//                Checking that there is data for; Client student name, email, star Id; club members info;
+//                problem description
                 if(textClieEmail.getText().trim().isEmpty() || textCliName.getText().trim().isEmpty()||
-                listModel.isEmpty()|| textStar.getText().trim().isEmpty()||taProbDesc.getText().trim().isEmpty()||
-                        !consent.isSelected()|| !signedWaiverCheckBox.isSelected()){
-                    showMessageDialog("Please enter data for all fields to add " +
-                            "ticket");
-                }else {
-                    try {
-                        Ticket newTik = new Ticket();
-
-                        newTik.setClientName(textCliName.getText());
+                chainListMo.isEmpty()|| textStar.getText().trim().isEmpty()||taProbDesc.getText().trim().isEmpty()){
+                    showMessageDialog("Please enter data for all fields up to the chain of custody" +
+                            " to add ticket");
+//                Checking that there is data for waiver is signed and consent to services are present
+                }else if(!consent.isSelected()||!signedWaiverCheckBox.isSelected()){
+                    showMessageDialog("Student client must sign a waiver and consent to services before services" +
+                            "can be rendered.");
+                }
+//                If there is the required data for the ticket add all the data
+                else {
+                    try{
+//                        Add simple data to ticket via constructor
+                        Ticket newTik = new Ticket(textCliName.getText(), signedWaiverCheckBox.isSelected(),
+                                taProbDesc.getText(), consent.isSelected());
+//                        Setting the rest of the values through setters
                         newTik.setClientID(textStar.getText());
                         newTik.setClientMail(textClieEmail.getText());
-//                        Only add phone number if the text is present
+//                      Only add phone number if the text is present
                         if(!textCliPhone.getText().trim().isEmpty()){
-                            newTik.setClientPhone(textCliPhone.getText());
+                            int er = newTik.setClientPhone(textCliPhone.getText());
+//                            Exception handling for non numeric input
+                            if (er==0){
+                                String phone= showInputDialog("Please enter a numbers " +
+                                        "only, for the phone number.");
+                                newTik.setClientPhone(phone);
+                            }
                         }
-                        newTik.setSignedWaiver(true);
-                        for (:
-                             ) {
+//                        Setting boolean of signed waiver to true in ticket
+//                        Taking first name and id out of listmodel to add to primary Club member,
+//                        also entering following club members to the chain of custody array in ticket
+                        LinkedList<String> chain = new LinkedList<>();
+                        int counter = 0;
+                        for (Object namNID: chainListMo.toArray()) {
+                            String array[] = String.valueOf(namNID).split("/");
 
+                            if (counter==0) {
+                                newTik.setMemName(array[0]);
+                                newTik.setMemID(array[1]);
+                            }
+                            chain.add(String.valueOf(namNID));
                         }
-                        //                    showMessageDialog("Your ticket was successfully added\n" +
-                        //                            "                        ^____^\n"+newTik);
-                        //                    forDisplayList = manager.getAllTickets().stream().collect(Collectors.toCollection(LinkedList::new));
-                        displayList(manager.ticketStore.getAllTickets());
-                        //                    displayList(forDisplayList);
-                        clearBoxes();
-                    }
-//                    catch (NumberFormatException nfe){
-//                        priorityComboBox.setSelectedIndex(0);
-//                    }
-                    catch (NullPointerException npe){
-                        priorityComboBox.setSelectedIndex(0);
-                        showMessageDialog("Please enter a number for the priority of the ticket, 1-5.");
+                        newTik.setChainCust(chain);
+//                        Set if disk is backed up and how
+                        if (yesRadioButton.isSelected()) {
+                            newTik.setBackUp(true);
+                            newTik.setMethod(externalHardDriveRadioButton.isSelected() ? "External" : "Cloud");
+                        }
+//                    If there is a resolution entered automatically add it to the resolved
+//                    ticket store. Otherwise add it to the ticket store
+                        if(taResolution.getText()!= null || taResolution.getText().isEmpty()){
+                            newTik.setResol(taResolution.getText());
+                            manager.resolveTicket(newTik);
+                        }else {
+                            manager.ticketStore.add(newTik);
+                        }
+//                        Clear values from tracking log inputs after ticket is added
+                        clearBoxesTrak();
+
+//                    Exceptions
+                    }catch (NumberFormatException nfe){
+                        showMessageDialog("Quit being a jerk. Try again.");
+                        System.out.println(nfe);
+                    }catch (NullPointerException npe){
+                        System.out.println(npe);
                     }catch (Exception t){
                         System.out.println(t);
                     }
@@ -187,110 +194,93 @@ public class TrackingLog extends JFrame{
             }
         });
 
-        searchDescriptionButton.addActionListener(new ActionListener() {
+
+        searchDescButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // check to see if the textbox is empty
-                if (descriptionSearchTextBox.getText().trim().isEmpty()){
-                    listModel.removeAllElements();
-                    ticketListStatusDescription.setText(NO_TICKETS_FOUND);
-                    clearBoxes();
+                if (textSrchDesc.getText().trim().isEmpty()){
+                    showMessageDialog("Please enter search terms into the " +
+                                    "text box");
                 }else {
-                    //clear Jlist for use
-                    listModel.removeAllElements();
-                    //clear reusable list for use
-//                    if(!forDisplayList.isEmpty()){
-////                        forDisplayList.clear();
-//                    }
-                    // add list of matching tickets to reusable list
-//                    forDisplayList = manager.searchByDescription(descriptionSearchTextBox.getText());
                     // if there are tickets
-                    if(manager.searchByDescription(descriptionSearchTextBox.getText()).size()!=0){
-                        ticketListStatusDescription.setText(TICKETS_MATCHING_DESCRIPTION);
-                        displayList(manager.searchByDescription(descriptionSearchTextBox.getText()));
-                        clearBoxes();
+                    if(manager.searchByDescription(textSrchDesc.getText()).size()!=0){
+                        LinkedList<Ticket> results = manager.searchByDescription(textSrchDesc.getText());
+                        for (Ticket result :
+                                results) {
+                            if(chainListMo.getSize()>1){
+                                tikListMo.addElement(result.toString2());
+                            }
+                            tikListMo.addElement(result.toString());
+                        }
+                        clearBoxesView();
 
                         //if there aren't tickets
                     }else {
-                        ticketListStatusDescription.setText(NO_TICKETS_FOUND);
-                        clearBoxes();
+                        clearBoxesView();
+                        showMessageDialog("Sorry there were no tickets that " +
+                                "matched your description");
                     }
                 }
             }
         });
 
-        searchIdButton.addActionListener(new ActionListener() {
+        searchIDButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // try just in case the user enters a non-numeric into box
-                try {
-                    //if to check if the box is empty or has a bs index
-                    if (idSearchTextBox.getText().trim().isEmpty() ||
-                            Integer.parseInt(idSearchTextBox.getText()) < 0){
-                        listModel.removeAllElements();
-                        ticketListStatusDescription.setText(INVALID_TICKET_ID);
-                        clearBoxes();
-                    }else {
-                        // clear the Jlist for the future list
-                        listModel.removeAllElements();
-                        //clear the reusable list in order for new use
-//                        if(!forDisplayList.isEmpty()){
-//                            forDisplayList.clear();
-//                        }
-                        // find ticket
-                        Ticket idTik = manager.searchById(Integer.parseInt(idSearchTextBox.getText()));
-                        //if for no ticket
-                        if(idTik==null){
-                            ticketListStatusDescription.setText(NO_TICKETS_FOUND);
-                            clearBoxes();
-                        }else {
-                            ticketListStatusDescription.setText(TICKET_MATCHING_ID);
-//                            forDisplayList.add(idTik);
-//                            displayList(forDisplayList);
-                            displayElement(manager.searchById(Integer.parseInt(idSearchTextBox.getText())));
-                            clearBoxes();
-                        }
-                    }
-                }catch (NumberFormatException nfe){
-                    listModel.removeAllElements();
-                    ticketListStatusDescription.setText(INVALID_TICKET_ID);
-                    clearBoxes();
-                }
-            }
-        });
-
-        showAllTicketsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(!forDisplayList.isEmpty()){
-                    forDisplayList.clear();}
-                forDisplayList = manager.getAllTickets().stream().collect(Collectors.toCollection(LinkedList::new));
-                displayList(forDisplayList);
-                ticketListStatusDescription.setText(ALL_TICKETS);
-            }
-        });
-
-        deleteSelectedButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(ticketList.isSelectionEmpty()){
-                    showMessageDialog("Please select the ticket you wish to " +
-                            "delete from the list");
+                // check to see if the textbox is empty
+                if (textSrchID.getText().trim().isEmpty()){
+                    showMessageDialog("Please enter valid number into the " +
+                            "text box");
                 }else {
-                    String resolution = showInputDialog("How was the " +
-                            "issue resolved?");
-                    if(resolution!=null) {
-                        Ticket toDelete = ticketList.getSelectedValue();
-                        toDelete.setResDesc(resolution);
-                        toDelete.setDateRes();
-                        showMessageDialog("Your ticket was successfully deleted");
-                        manager.resolveTicket(toDelete);
-                        listModel.removeElement(toDelete);
-                        ticketListStatusDescription.setText(ALL_TICKETS);
+                    // if there are tickets
+                    try {
+                        if (manager.searchById(Integer.parseInt(textSrchID.getText())) != null) {
+                            Ticket result = manager.searchById(Integer.parseInt(textSrchID.getText()));
+                            if (chainListMo.getSize() > 1) {
+                                tikListMo.addElement(result.toString2());
+                            }
+                            tikListMo.addElement(result.toString());
+
+                            clearBoxesView();
+
+                            //if there aren't tickets
+                        } else {
+                            showMessageDialog("Sorry there were no tickets that " +
+                                    "matched your description.");
+                        }
+                    } catch (NumberFormatException nfe) {
+                        clearBoxesView();
+                        showMessageDialog("Please enter a valid number");
                     }
                 }
             }
         });
+
+//TODO: Add delete club member button and ticket from ticket viewer
+
+//        deleteSelectedButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if(ticketList.isSelectionEmpty()){
+//                    showMessageDialog("Please select the ticket you wish to " +
+//                            "delete from the list");
+//                }else {
+//                    String resolution = showInputDialog("How was the " +
+//                            "issue resolved?");
+//                    if(resolution!=null) {
+//                        Ticket toDelete = ticketList.getSelectedValue();
+//                        toDelete.setResDesc(resolution);
+//                        toDelete.setDateRes();
+//                        showMessageDialog("Your ticket was successfully deleted");
+//                        manager.resolveTicket(toDelete);
+//                        listModel.removeElement(toDelete);
+//                        ticketListStatusDescription.setText(ALL_TICKETS);
+//                    }
+//                }
+//            }
+//        });
         saveAndQuitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

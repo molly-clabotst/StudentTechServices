@@ -17,7 +17,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="97969" layout-manager="GridLayoutManager" row-count="15" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="97969" layout-manager="GridLayoutManager" row-count="14" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Tracking Log"/>
@@ -125,14 +125,6 @@
                   <text value="Star ID"/>
                 </properties>
               </component>
-              <component id="cfd6e" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Date"/>
-                </properties>
-              </component>
               <component id="c83bc" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -160,12 +152,6 @@
                 <properties>
                   <text value=""/>
                 </properties>
-              </component>
-              <component id="aa172" class="javax.swing.JSpinner" binding="dateSpinner">
-                <constraints>
-                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
               </component>
               <component id="14389" class="javax.swing.JTextField" binding="textMemStar">
                 <constraints>
@@ -195,14 +181,6 @@
                   <text value=""/>
                 </properties>
               </component>
-              <component id="f822b" class="javax.swing.JCheckBox" binding="signedWaiverCheckBox" default-binding="true">
-                <constraints>
-                  <grid row="2" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Signed Waiver"/>
-                </properties>
-              </component>
               <component id="bbd58" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -211,19 +189,9 @@
                   <text value="Resolution"/>
                 </properties>
               </component>
-              <component id="34ee7" class="javax.swing.JCheckBox" binding="diskCleanUpCheckBox" default-binding="true">
-                <constraints>
-                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="324" height="18"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <text value="Disk Clean Up?"/>
-                </properties>
-              </component>
               <component id="8920c" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Did student back up drive before disk clean up?"/>
@@ -231,7 +199,7 @@
               </component>
               <component id="7745b" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="How was it backed up?"/>
@@ -239,7 +207,7 @@
               </component>
               <component id="f0b8c" class="javax.swing.JRadioButton" binding="externalHardDriveRadioButton" default-binding="true">
                 <constraints>
-                  <grid row="13" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="12" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="External hard drive"/>
@@ -247,7 +215,7 @@
               </component>
               <component id="eae6e" class="javax.swing.JRadioButton" binding="yesRadioButton" default-binding="true">
                 <constraints>
-                  <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Yes"/>
@@ -255,7 +223,7 @@
               </component>
               <component id="d78f4" class="javax.swing.JRadioButton" binding="noRadioButton" default-binding="true">
                 <constraints>
-                  <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="11" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="No"/>
@@ -263,7 +231,7 @@
               </component>
               <component id="5a8ae" class="javax.swing.JRadioButton" binding="cloudBasedStorageRadioButton" default-binding="true">
                 <constraints>
-                  <grid row="13" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="12" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Cloud based storage"/>
@@ -271,18 +239,10 @@
               </component>
               <component id="8429c" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="14" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Student has seen the form, agknowledges it's accuracy and consents to recieve services."/>
-                </properties>
-              </component>
-              <component id="db6ec" class="javax.swing.JButton" binding="submitInformationButton" default-binding="true">
-                <constraints>
-                  <grid row="14" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Submit Information"/>
                 </properties>
               </component>
               <component id="80586" class="javax.swing.JTextArea" binding="taResolution">
@@ -297,7 +257,7 @@
               </component>
               <component id="3224a" class="javax.swing.JCheckBox" binding="consent">
                 <constraints>
-                  <grid row="14" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value=""/>
@@ -317,6 +277,30 @@
                 </constraints>
                 <properties>
                   <text value="Add Club Member to Work Party"/>
+                </properties>
+              </component>
+              <component id="f822b" class="javax.swing.JCheckBox" binding="signedWaiverCheckBox" default-binding="true">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Signed Waiver"/>
+                </properties>
+              </component>
+              <component id="db6ec" class="javax.swing.JButton" binding="submitInformationButton" default-binding="true">
+                <constraints>
+                  <grid row="13" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Submit Information"/>
+                </properties>
+              </component>
+              <component id="1a30e" class="javax.swing.JButton" binding="saveAndQuitButton" default-binding="true">
+                <constraints>
+                  <grid row="13" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Save and Quit"/>
                 </properties>
               </component>
             </children>
@@ -343,7 +327,9 @@
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <text value=""/>
+                </properties>
               </component>
               <component id="c2e22" class="javax.swing.JButton" binding="searchIDButton">
                 <constraints>
@@ -395,9 +381,9 @@
                   <text value="Load"/>
                 </properties>
               </component>
-              <component id="b2cf4" class="javax.swing.JTextArea" binding="taTikDisplay">
+              <component id="a75f8" class="javax.swing.JList" binding="tikDispList">
                 <constraints>
-                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
                   </grid>
                 </constraints>

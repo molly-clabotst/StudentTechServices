@@ -3,6 +3,7 @@ package Student_Tech_Services_Tracking_Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.regex.*;
 
 public class Ticket {
@@ -21,14 +22,13 @@ public class Ticket {
 //    Student member info
     private String memName;
     private String memID;
-    private ArrayList<String> chainCust;
+    private LinkedList<String> chainCust;
 
 //    Descriptions
     private String probDesc;
     private String resol;
 
 //    Disk stuff
-    private boolean disk = false;
     private boolean backUp = false;
     private String method;
 
@@ -49,53 +49,18 @@ public class Ticket {
     // TODO implement your mechanism to ensure new tickets have a unique ID
     // TODO add any other methods you wrote in the previous lab and will need here
 
-//    Constructor new for ticket
-    public Ticket(){}
-
-//    public Ticket(int ID, String cName, String cID, String cMail, int cPhone, boolean sign,
-//                  Date date, String mName, String mID, String prDes, boolean disk,
-//                  boolean backUp, String how, boolean consent) {
-//        this.ID = ID;
-//        this.clientName = cName;
-//        this.clientID = cID;
-//        this.clientMail = cMail;
-//        this.clientPhone = cPhone;
-//        this.signedWaiver = sign;
-//        this.dateRecorded = date;
-//        this.memName = mName;
-//        this.memID = mID;
-//        this.probDesc = prDes;
-//        this.disk = disk;
-//        this.backUp = backUp;
-//        this.method = how;
-//        this.consent = consent;
-//    }
-
 
     // TODO use this constructor to create a Ticket from existing Ticket data read from a file
     // Notice that it does not modify the static ticketIDCounter
     // Use the setNextID and getNextId method if you need to change the next ticketID that will
     // be generated, for example, if you are re-starting the program
 
-//    Constructor for saved ticket with chain of custody
-    public Ticket(int ID, String cName, String cID, String cMail, int cPhone, boolean sign,
-                  Date date, String mName, String mID, String prDes,
-                  ArrayList<String> chain, boolean disk, boolean backUp, String how,
-                  boolean consent) {
-        this.ID = ID;
+//    Constructor for new Ticket
+    public Ticket(String cName, boolean sign, String prDes, boolean consent) {
         this.clientName = cName;
-        this.clientID = cID;
-        this.clientMail = cMail;
-        this.clientPhone = cPhone;
         this.signedWaiver = sign;
-        this.dateRecorded = date;
-        this.memName = mName;
-        this.memID = mID;
+        this.dateRecorded = new Date();
         this.probDesc = prDes;
-        this.chainCust = chain;
-        this.disk = disk;
-        this.backUp = backUp;
-        this.method = how;
         this.consent = consent;
     }
 
@@ -117,17 +82,17 @@ public class Ticket {
         }
     }
     public void setClientMail(String mail){this.clientMail = mail;}
-    public void setClientPhone(String phone){
+    public int setClientPhone(String phone){
         int fone = 0;
 
         try{
             fone = Integer.parseInt(phone);
         }catch (NumberFormatException nfe){
-            System.out.println(nfe);
+            fone = 0;
+            return fone;
         }
-        this.clientPhone = fone;
+        return this.clientPhone = fone;
     }
-    public void setSignedWaiver(boolean meh){this.signedWaiver = meh;}
     public void setMemName(String name){this.memName= name;}
     public void setMemID(String id){
         String pattern = "([a-z&A-z][a-z&A-z][1-9][1-9][1-9][1-9][a-z&A-z][a-z&A-z])";
@@ -154,13 +119,11 @@ public class Ticket {
             System.out.println(nfe);
         }
     }
-    public void setChainCust(ArrayList<String> chain){this.chainCust = chain;}
+    public void setChainCust(LinkedList<String> chain){this.chainCust = chain;}
     public void setProbDesc(String desc){this.probDesc=desc;}
     public void setResol(String resolv){this.resol = resolv;}
-    public void setDisk(boolean eh){this.disk=eh;}
     public void setBackUp(boolean maybe){this.backUp=maybe;}
     public void setMethod(String how){this.method = how;}
-    public void setConsent(boolean yes){this.consent=yes;}
 
 //    Getters
     public int getID(){return this.ID;}
@@ -171,10 +134,9 @@ public class Ticket {
     public boolean getSignedWaive(){return this.signedWaiver;}
     public String getMemName(){return this.memName;}
     public String getMemID(){return this.memID;}
-    public ArrayList<String> getChainCust(){return this.chainCust;}
+    public LinkedList<String> getChainCust(){return this.chainCust;}
     public String getProbDesc(){return this.probDesc;}
     public String getResol(){return this.resol;}
-    public boolean getDisk(){return this.disk;}
     public boolean getBackUp(){return this.backUp;}
     public String getMethod(){return this.method;}
     public boolean getConsent(){return this.consent;}
@@ -186,10 +148,25 @@ public class Ticket {
         String day = sdfr.format(this.dateRecorded);
         return("\nStudent\nName: "+ this.clientName+ "\tStar ID: "+this.clientID+
                 "\tEmail: "+this.clientMail+"\nPhone: " + String.valueOf(this.clientPhone) +
-                "\tDate Reported: " + day + "\tSigned Waiver: " +
+                "\tDate Reported: " + day + "\tSigned Waiver: " + String.valueOf(this.signedWaiver) +
                 "\nClub Member\nName: " + this.memName + "\tStar ID: " + this.memID +
                 "\nDescription of Problem: " + "\n" + this.probDesc +
-                "\n\nConsent to perfom services: " + "\n");
+                "\n\nConsent to perform services: " + String.valueOf(this.consent) + "\n");
+    }
+
+    public String chainToString(){
+        //TODO: Make formatting less ugly
+//        make a header for chain of custody mini table
+        String chainString="\nName\tStar Id";
+//        Add all members to chain of custody list
+        for (String memb :
+                this.chainCust) {
+//        Breaking apart entries from the list
+            String array[]= memb.split("/");
+//        Add names and star ids to string
+            chainString +="\n"+ array[0]+"\t"+ array[1];
+        }
+        return chainString;
     }
 
     // TODO Problem 8 you may want to add a method to generate a String representing this Ticket, suitable
@@ -202,10 +179,10 @@ public class Ticket {
         String day = sdfr.format(this.dateRecorded);
         return ("\nStudent\nName: " + this.clientName + "\tStar ID: " + this.clientID +
                 "\tEmail: " + this.clientMail + "\nPhone: " + String.valueOf(this.clientPhone) +
-                "\tDate Reported: " + day + "\tSigned Waiver: " +
-                "\nClub Member\nName: " + this.memName + "\tStar ID: " + this.memID +
-                "\nDescription of Problem: " + "\n" + this.probDesc + "\nChain of Custody: " +
-                "\n\nConsent to perfom services: " + "\n");
+                "\tDate Reported: " + day + "\tSigned Waiver: " + String.valueOf(this.signedWaiver) +
+                "\nClub Members\nMain Club Member\nName: " + this.memName + "\tStar ID: " + this.memID +
+                "\nChain of Custody: " + chainToString() +"\nDescription of Problem: " + "\n" + this.probDesc +
+                "\n\nConsent to perform services: " + String.valueOf(this.consent) + "\n");
     }
 }
 
