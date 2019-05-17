@@ -16,6 +16,25 @@ public class TicketDB {
 
             ResultSet tikRs = srchSql.executeQuery();
 
+            if(!tikRs.isBeforeFirst()) {
+                System.out.println("Sorry, no entries are in the table yet");
+            }else {
+                while (tikRs.next()){
+                    String clientID = tikRs.getString("clientID");
+                    boolean waviver = tikRs.getBoolean("waiver_signed");
+                    String desc = tikRs.getString("description_of_problem");
+                    int group = tikRs.getInt("group_worked");
+                    String prob = tikRs.getString("problems_to_escalate");
+                    String sol = tikRs.getString("solutions");
+                    boolean disk = tikRs.getBoolean("disk_clean");
+                    boolean cons = tikRs.getBoolean("consent_understanding");
+
+                    if()
+                    Ticket tick = (String clientID, boolean waiver, String desc,);
+
+                }
+            }
+
         }catch (SQLException e){
             System.out.println(e);
         }

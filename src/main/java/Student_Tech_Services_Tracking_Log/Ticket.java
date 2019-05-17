@@ -45,6 +45,17 @@ public class Ticket {
         this.consent = consent;
     }
 
+//    Constructor for old ticket
+    public  Ticket(String clientID, boolean sign, String prDes, boolean consent, )
+
+    public Ticket(String cName, boolean sign, Date date, String prDes, boolean consent) {
+        this.clientName = cName;
+        this.signedWaiver = sign;
+        this.dateRecorded = date;
+        this.probDesc = prDes;
+        this.consent = consent;
+    }
+
 //    Setters
     public void setClientName(String name){ this.clientName = name; }
     public void setClientID(String id){
