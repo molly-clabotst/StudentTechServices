@@ -23,28 +23,11 @@ public class TicketStore {
 
         ticketQueue = new LinkedList<>();
 
-        // This is to sort tickets with highest priority first
-        // If two tickets have the same priority, oldest first
-//
-//        ticketComparator = new Comparator<Ticket>() {
-//            @Override
-//            public int compare(Ticket t1, Ticket t2) {
-//
-//                //Joint equal priorities, sort with oldest first
-//                if (t1.getPriority() == t2.getPriority()) {
-//                    return t1.getDateReported().compareTo(t2.getDateReported());
-//                } else {
-//                    // Sort with smallest priority number at the start
-//                    return t1.getPriority() - t2.getPriority();
-//                }
-//            }
-//        };
     }
 
 
     public void addAll(ArrayList<Ticket> tickets) {
         ticketQueue.addAll(tickets);
-//        ticketQueue.sort(ticketComparator);
     }
 
 
